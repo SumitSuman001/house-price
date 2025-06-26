@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>House Price Prediction</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      background: url('{{ url_for('static', filename='bg.png') }}') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      animation: fadeInDown 1s ease;
+      text-align: center;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+      animation: fadeInUp 1.5s ease;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      background: hwb(188 53% 4%);
+      color: #333;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #28a745;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      color: #3c1d1d;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    button:hover {
+      background-color: hsl(185, 38%, 64%);
+      transform: scale(1.05);
+    }
+
+    h3 {
+      margin-top: 20px;
+      color: #fff;
+      background: rgba(0,0,0,0.6);
+      padding: 10px 20px;
+      border-radius: 10px;
+      animation: fadeIn 2s ease-in-out;
+      text-align: center;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🏡 House Price Prediction</h1>
+
+  <div class="container">
+    <form action="/predict" method="post">
+      <input type="text" name="area" placeholder="Area (sq ft)" required><br>
+      <input type="text" name="bedrooms" placeholder="No. of Bedrooms" required><br>
+      <input type="text" name="bathrooms" placeholder="No. of Bathrooms" required><br>
+      <input type="text" name="stories" placeholder="No. of Stories" required><br>
+      <input type="text" name="parking" placeholder="Parking Spaces" required><br>
+
+      <select name="mainroad" required>
+        <option value="">Main Road Access?</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select><br>
+
+      <select name="guestroom" required>
+        <option value="">Guest Room?</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select><br>
+
+      <select name="basement" required>
+        <option value="">Basement?</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select><br>
+
+      <select name="hotwaterheating" required>
+        <option value="">Hot Water Heating?</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select><br>
+
+      <select name="airconditioning" required>
+        <option value="">Air Conditioning?</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select><br>
+
+      <select name="prefarea" required>
+        <option value="">Preferred Area?</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select><br>
+
+      <select name="furnishingstatus" required>
+        <option value="">Furnishing Status</option>
+        <option value="furnished">Furnished</option>
+        <option value="semi-furnished">Semi-Furnished</option>
+        <option value="unfurnished">Unfurnished</option>
+      </select><br>
+
+      <button type="submit">Predict Price</button>
+    </form>
+
+    {% if prediction_text %}
+      <h3>{{ prediction_text }}</h3>
+    {% endif %}
+  </div>
+</body>
+</html>
